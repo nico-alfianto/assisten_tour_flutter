@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  image_picker: ^1.1.2  # <-- UDAH UPDATE VERSI WEB SUPPORT
+ # image_picker: ^1.1.2  # <-- UDAH UPDATE VERSI WEB SUPPORT
   provider: ^6.1.2      # <-- TAMBAH INI BUAT STATE
 
 dev_dependencies:
