@@ -9,42 +9,32 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          flutter-version: '3.19.6' # versi LTS paling stabil buat web
           channel: 'stable'
-          cache: true
       
-      - name: Install dependencies
-        run: flutter pub get
+      - run: flutter clean
+      - run: flutter pub get --no-pub
+      - run: flutter pub get
       
-      - name: Build Web
-        run: flutter build web --release --base-href /assisten_tour_flutter/
+      - run: flutter build web --release --web-renderer canvaskit --base-href /assisten_tour_flutter/
       
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build/web
+          path: build/web
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v4
