@@ -17,14 +17,11 @@ jobs:
       
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6' # versi LTS paling stabil buat web
-          channel: 'stable'
+          flutter-version: '3.19.6'
       
-      - run: flutter clean
-      - run: flutter pub get --no-pub
       - run: flutter pub get
       
-      - run: flutter build web --release --web-renderer canvaskit --base-href /assisten_tour_flutter/
+      - run: flutter build web --release --base-href /assisten_tour_flutter/
       
       - uses: actions/upload-pages-artifact@v3
         with:
